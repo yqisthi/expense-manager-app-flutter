@@ -1,4 +1,4 @@
-import 'transaction.dart';
+import 'widgets/user_transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -32,25 +32,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: "t1",
-      title: "Patrobas 1945",
-      amount: 389.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: "t2",
-      title: "Somethinc Serum",
-      amount: 170,
-      date: DateTime.now(),
-    ),
-  ];
-  // String titleInput;
-  // String amountInput;
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,91 +47,7 @@ class MyHomePage extends StatelessWidget {
             elevation: 5,
           ),
         ),
-        Card(
-          child: Container(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(labelText: "Title"),
-                  controller: titleController,
-                  // onChanged: (val) {
-                  //   titleInput = val;
-                  // },
-                ),
-                TextField(
-                  decoration: InputDecoration(labelText: "Amount"),
-                  controller: amountController,
-                  // onChanged: (val) {
-                  //   amountInput = val;
-                  // },
-                ),
-                FlatButton(
-                  child: Text("Add Transaction"),
-                  textColor: Colors.purple,
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ),
-        Column(
-          children: transactions.map((tx) {
-            return Card(
-              child: Row(
-                children: <Widget>[
-                  // Amount
-                  Container(
-                    child: Text(
-                      '\$${tx.amount}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.purple,
-                      ),
-                    ),
-                    margin: EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 15,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.purple,
-                        width: 2,
-                      ),
-                    ),
-                    padding: EdgeInsets.all(10),
-                  ),
-
-                  Column(
-                    // Title and DateTime
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          tx.title.toString(),
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: Text(
-                          DateFormat('dd-MM-yyyy').format(tx.date),
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                    ],
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                  )
-                ],
-              ),
-            );
-          }).toList(),
-        )
+        UserTransaction()
       ]),
     );
   }
