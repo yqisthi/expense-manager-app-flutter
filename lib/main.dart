@@ -1,12 +1,13 @@
 import 'transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -65,24 +66,52 @@ class MyHomePage extends StatelessWidget {
             return Card(
               child: Row(
                 children: <Widget>[
+                  // Amount
                   Container(
-                    child: Text(tx.amount.toString()),
+                    child: Text(
+                      '\$${tx.amount}',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.purple,
+                      ),
+                    ),
                     margin: EdgeInsets.symmetric(
                       vertical: 10,
                       horizontal: 15,
                     ),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.black,
+                        color: Colors.purple,
                         width: 2,
                       ),
                     ),
                     padding: EdgeInsets.all(10),
                   ),
-                  Column(children: <Widget>[
-                    Container(child: Text(tx.title.toString())),
-                    Container(child: Text(tx.date.toString())),
-                  ])
+
+                  Column(
+                    // Title and DateTime
+                    children: <Widget>[
+                      Container(
+                        child: Text(
+                          tx.title.toString(),
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          DateFormat('dd-MM-yyyy').format(tx.date),
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  )
                 ],
               ),
             );
