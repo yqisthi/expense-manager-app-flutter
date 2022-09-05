@@ -38,17 +38,19 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Expense Manager App"),
       ),
-      body: Column(children: <Widget>[
-        Container(
-          width: double.infinity,
-          child: Card(
-            color: Colors.blue,
-            child: Text("Chart"),
-            elevation: 5,
+      body: SingleChildScrollView(
+        child: Column(children: <Widget>[
+          Container(
+            width: double.infinity,
+            child: Card(
+              color: Colors.blue,
+              child: Text("Chart"),
+              elevation: 5,
+            ),
           ),
-        ),
-        UserTransaction()
-      ]),
+          UserTransaction()
+        ]),
+      ),
     );
   }
 }
