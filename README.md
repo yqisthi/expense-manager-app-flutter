@@ -1,6 +1,6 @@
 # expense_manager_app
 
-A new Flutter project.
+It's still under development and expected to finish by the end of September 2022
 
 ## Getting Started
 
