@@ -27,7 +27,8 @@ class ChartBar extends StatelessWidget {
             ),
           ),
           FractionallySizedBox(
-            heightFactor: spendingPctOfTotal,
+            heightFactor: 0.25,
+            alignment: Alignment(0.0, -1.0),
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
