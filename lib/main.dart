@@ -109,21 +109,33 @@ class _MyHomePageState extends State<MyHomePage> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final appbar = AppBar(
+      title: Text("Expense Manager"),
+      titleTextStyle: Theme.of(context).appBarTheme.textTheme.titleMedium,
+      actions: <Widget>[
+        IconButton(
+          onPressed: () => _startAddNewTransaction(context),
+          icon: Icon(Icons.add),
+        )
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Expense Manager"),
-        titleTextStyle: Theme.of(context).appBarTheme.textTheme.titleMedium,
-        actions: <Widget>[
-          IconButton(
-            onPressed: () => _startAddNewTransaction(context),
-            icon: Icon(Icons.add),
-          )
-        ],
-      ),
+      appBar: appbar,
       body: SingleChildScrollView(
         child: Column(children: <Widget>[
-          Chart(_recentTransactions),
-          TransactionList(_userTransactions, _deleteTransaction)
+          Container(
+            height: (MediaQuery.of(context).size.height -
+                    appbar.preferredSize.height -
+                    MediaQuery.of(context).padding.top) *
+                0.4,
+            child: Chart(_recentTransactions),
+          ),
+          Container(
+              height: (MediaQuery.of(context).size.height -
+                      appbar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.4,
+              child: TransactionList(_userTransactions, _deleteTransaction))
         ]),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
