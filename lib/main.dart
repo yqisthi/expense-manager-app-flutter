@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '/widgets/new_transaction.dart';
 import 'models/transaction.dart';
@@ -12,6 +13,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]);
     return MaterialApp(
       title: 'Expense Manager',
       theme: ThemeData(
@@ -64,6 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
       date: DateTime.now(),
     ),
   ];
+
+  bool _showCharts = false;
 
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((tx) {
@@ -123,19 +130,33 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: appbar,
       body: SingleChildScrollView(
         child: Column(children: <Widget>[
-          Container(
-            height: (MediaQuery.of(context).size.height -
-                    appbar.preferredSize.height -
-                    MediaQuery.of(context).padding.top) *
-                0.4,
-            child: Chart(_recentTransactions),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Show Charts"),
+              Switch(
+                  value: _showCharts,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _showCharts = newValue;
+                    });
+                  })
+            ],
           ),
-          Container(
-              height: (MediaQuery.of(context).size.height -
-                      appbar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.4,
-              child: TransactionList(_userTransactions, _deleteTransaction))
+          _showCharts
+              ? Container(
+                  height: (MediaQuery.of(context).size.height -
+                          appbar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.3,
+                  child: Chart(_recentTransactions),
+                )
+              : Container(
+                  height: (MediaQuery.of(context).size.height -
+                          appbar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.7,
+                  child: TransactionList(_userTransactions, _deleteTransaction))
         ]),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
