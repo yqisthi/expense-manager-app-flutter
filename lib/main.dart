@@ -116,6 +116,8 @@ class _MyHomePageState extends State<MyHomePage> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final isLandScape = mediaQuery.orientation == Orientation.landscape;
     final appbar = AppBar(
       title: Text("Expense Manager"),
       titleTextStyle: Theme.of(context).appBarTheme.textTheme.titleMedium,
@@ -126,37 +128,49 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ],
     );
+    final txListWidget = Container(
+        height: (mediaQuery.size.height -
+                appbar.preferredSize.height -
+                mediaQuery.padding.top) *
+            0.7,
+        child: TransactionList(_userTransactions, _deleteTransaction));
     return Scaffold(
       appBar: appbar,
       body: SingleChildScrollView(
         child: Column(children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Show Charts"),
-              Switch(
-                  value: _showCharts,
-                  onChanged: (newValue) {
-                    setState(() {
-                      _showCharts = newValue;
-                    });
-                  })
-            ],
-          ),
-          _showCharts
-              ? Container(
-                  height: (MediaQuery.of(context).size.height -
-                          appbar.preferredSize.height -
-                          MediaQuery.of(context).padding.top) *
-                      0.3,
-                  child: Chart(_recentTransactions),
-                )
-              : Container(
-                  height: (MediaQuery.of(context).size.height -
-                          appbar.preferredSize.height -
-                          MediaQuery.of(context).padding.top) *
-                      0.7,
-                  child: TransactionList(_userTransactions, _deleteTransaction))
+          if (isLandScape)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Show Charts"),
+                Switch(
+                    value: _showCharts,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _showCharts = newValue;
+                      });
+                    })
+              ],
+            ),
+          if (!isLandScape)
+            Container(
+              height: (mediaQuery.size.height -
+                      appbar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.3,
+              child: Chart(_recentTransactions),
+            ),
+          if (!isLandScape) txListWidget,
+          if (isLandScape)
+            _showCharts
+                ? Container(
+                    height: (mediaQuery.size.height -
+                            appbar.preferredSize.height -
+                            mediaQuery.padding.top) *
+                        0.7,
+                    child: Chart(_recentTransactions),
+                  )
+                : txListWidget,
         ]),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
